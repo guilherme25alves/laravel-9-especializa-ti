@@ -52,4 +52,9 @@ class User extends Authenticatable
         })->get();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
 }
