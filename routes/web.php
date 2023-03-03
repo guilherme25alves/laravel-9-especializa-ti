@@ -21,7 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::post('/users/{id}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/users/{id}/comments/create', [CommentController::class, 'create'])->name('comments.create');
 Route::get('/users/{id}/comments', [CommentController::class, 'index'])->name('comments.index');
 
 Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
