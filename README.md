@@ -1,3 +1,13 @@
+# Projeto 
+
+## Objetivo 
+
+Validar as funcionalidades e novos recursos presentes no Laravel 9. Foi utilizado uma playlist do canal EspecializaTI do Carlos Ferreira para desenvolvimento e estudos. [Segue link](https://www.youtube.com/@EspecializatiBr)
+
+## Demonstração do projeto 
+
+![Preview Projeto](/public/images/demo.png "Preview Tela inicial após login")
+
 
 # Setup Docker Para Projetos Laravel
 [Assine a Academy, e Seja VIP!](https://academy.especializati.com.br)
