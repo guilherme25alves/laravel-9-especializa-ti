@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUpdateUserFormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -46,6 +47,27 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
 
+        if ($request->image) {
+            /*
+           // $data['image'] = $request->image->store('users'); /; Upload de forma mais simples
+
+            // Recuperando a extensão do arquivo
+            $extension = $request->image->getClientOriginalExtension();
+
+           // Opção renomeando o nome do arquivo 
+           $data['image'] = $request->image->storeAs('users', now() . ".{$extension}");
+           */
+
+           // Refatorando exemplo acima
+           $imageUploaded = $request->image;
+           
+           // Recuperando a extensão do arquivo
+           $extension = $imageUploaded->getClientOriginalExtension();
+
+           // Opção renomeando o nome do arquivo 
+           $data['image'] = $imageUploaded->storeAs('users', now() . ".{$extension}");
+        }
+
         $this->model->create($data);
 
         return redirect()->route('users.index');
@@ -75,6 +97,20 @@ class UserController extends Controller
 
         if ($request->password)
             $data['password'] = bcrypt($request->password);
+
+        if ($request->image) {
+            // Deletar imagem antiga do usuário, caso ele persista uma nova no momento de atualizar o cadastro
+            if ($user->image && Storage::exists($user->image)) {
+                Storage::delete($user->image);
+            }
+
+            $imageUploaded = $request->image;
+           
+            $extension = $imageUploaded->getClientOriginalExtension();
+
+            $data['image'] = $imageUploaded->storeAs('users', now() . ".{$extension}");
+        }
+
 
         $user->update($data);
 

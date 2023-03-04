@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image'
     ];
 
     /**
@@ -48,8 +49,11 @@ class User extends Authenticatable
             if ($search) {
                 $query->where('email', $search);
                 $query->orWhere('name', 'LIKE', "%{$search}%");
-            }
-        })->get();
+            }       
+        })
+            ->with('comments') // Trazendo já os comentários, possibilitando consultar e contagem total por usuário
+            ->paginate(1); // Trazer registros paginados // 1 como parâmetro é para paginar de 1 em 1
+            // ->get(); // Trazer tudo 
     }
 
     public function comments()
